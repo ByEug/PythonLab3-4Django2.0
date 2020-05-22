@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,cyrillic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/base_style.css' %}">
+    <!--<meta charset="UTF-8">-->
+    <title>SneakerShop</title>
+</head>
+<body>
+    <div class = 'head'>
+
+        <h1><a href="/">Sneaker Shop</a></h1>
+    </div>
+
+    <div class = 'insert'>
+        {%  block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>

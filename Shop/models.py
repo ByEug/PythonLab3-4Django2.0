@@ -10,7 +10,7 @@ import uuid
 class ImageSneakers(models.Model):
 
     name = models.CharField(max_length=100, default="sneakers")
-    image = models.ImageField()
+    image = models.ImageField(upload_to='images/')
 
 
 class Brand(models.Model):

@@ -1,0 +1,14 @@
+{% extends 'Shop/base.html' %}
+
+{% block content %}
+    <div class = sneaker_page>
+    <br> <h2>{{ current_model.Sneakers_info.brand }} {{ current_model.Sneakers_info.sneakers_name }}</h2> <br>
+    <img src="{{ current_model.image.image.url }}" height="167.2" width="278"> <br>
+    Recommended use:
+        {% for item in current_model.Sneakers_info.way_to_use.all %}
+            {{ item }}
+        {% endfor %} <br>
+    EU:{{ current_model.size }} <br>
+    In stock: {{ current_model.amount }} <br>
+    </div>
+{% endblock %}
