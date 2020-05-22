@@ -1,8 +1,10 @@
 {% extends 'Shop/base.html' %}
 
 {% block content %}
+
         {%  for item in object_list %}
-            <h3><a href="{% url 'sneaker_page' pk=item.pk %}"> {{ item.Sneakers_info.brand }} {{ item.Sneakers_info.sneakers_name }} </a> </h3> <br>
             <img src="{{ item.image.image.url }}" height="167.2" width="278"> <br>
+            <h3><a href="{% url 'sneaker_page' pk=item.pk %}"> {{ item.Sneakers_info.brand }} {{ item.Sneakers_info.sneakers_name }} </a> </h3> <br>
         {% endfor %}
+
 {% endblock %}
