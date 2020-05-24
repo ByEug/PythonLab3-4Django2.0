@@ -20,8 +20,8 @@
         </div>
 
     <div>
-        {% if not user.ShopUser.verified %}
-            <h3 align="right" ><a href="">{{ user.email }}</a></h3>
+        {% if not user.shopuser.verified and not user.is_superuser %}
+            <h3 align="right" ><a href="{% url 'send_mail' %}">Verify your account!</a></h3>
         {% endif %}
     </div>
 

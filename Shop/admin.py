@@ -6,14 +6,14 @@ from django.contrib.auth.models import User
 # Register your models here.
 
 
-class ShopUserInLine(admin.StackedInline):
+"""class ShopUserInLine(admin.StackedInline):
     model = ShopUser
     can_delete = False
     verbose_name_plural = 'shop_user'
 
 
 class UserAdmin(BaseUserAdmin):
-    inlines = (ShopUserInLine,)
+    inlines = (ShopUserInLine,)"""
 
 
 admin.site.register(ImageSneakers)
@@ -21,5 +21,5 @@ admin.site.register(Brand)
 admin.site.register(WayToUse)
 admin.site.register(Sneakers)
 admin.site.register(SneakersInstance)
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
+#admin.site.unregister(User)
+#admin.site.register(User, UserAdmin)
