@@ -1,16 +1,21 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.models import User
+from django.contrib import auth
 from .models import SneakersInstance
 from django.views.generic import ListView
 from django.utils import timezone
 from .models import SneakersInstance
 from .forms import SneakersForm
-
 # Create your views here.
 
 
 class SneakersList(ListView):
     model = SneakersInstance
     template_name = 'Shop/all_sneakers.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 def sneaker_page(request, pk):
@@ -53,7 +58,5 @@ def new_page(request):
     return render(request, 'Shop/new_page.html', {'form': form})
 
 
-#def sneakers_list(request):
-    #posts = SneakersInstance.objects.all()
-    #return render(request, 'Shop/base.html', {'posts': posts})
+
 

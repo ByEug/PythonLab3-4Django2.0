@@ -130,3 +130,11 @@ STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'Shop/static')
 
+LOGIN_REDIRECT_URL = '/'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'blacksage00@mail.ru'
+EMAIL_HOST_PASSWORD = 'Zb_30052000'
+EMAIL_PORT = 587
+

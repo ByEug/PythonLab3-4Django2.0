@@ -11,8 +11,18 @@
 </head>
 <body>
     <div class = 'head'>
-
         <h1><a href="/">Sneaker Shop</a></h1>
+        {% if not user.is_active %}
+            <h3 align="right" ><a href="{% url 'login'%}">Log in</a></h3>
+        {% else %}
+            <h3 align="right" ><a href="{% url 'logout'%}">Log out</a></h3>
+        {% endif %}
+        </div>
+
+    <div>
+        {% if not user.ShopUser.verified %}
+            <h3 align="right" ><a href="">{{ user.email }}</a></h3>
+        {% endif %}
     </div>
 
     <div class = 'insert'>
