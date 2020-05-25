@@ -8,13 +8,48 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.views.generic import ListView
-from .models import SneakersInstance, ShopUser
+from .models import SneakersInstance
 from .forms import SneakersForm
+import logging
 # Create your views here.
+
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(name)-12s %(levelname)-8s %(message)s'
+        },
+        'file': {
+            'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console'
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'file',
+            'filename': '/home/eugene/PycharmProjects/lab_3_4_django/lab_3_4_django/debug.log'
+        }
+    },
+    'loggers': {
+        '': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'file']
+        }
+    }
+})
+
+logger = logging.getLogger(__name__)
 
 
 class SneakersList(ListView):
     model = SneakersInstance
+    logger.debug("Show all sneakers")
     template_name = 'Shop/all_sneakers.html'
 
     def get_context_data(self, **kwargs):
@@ -24,6 +59,7 @@ class SneakersList(ListView):
 
 def sneaker_page(request, pk):
     sneaker_model = get_object_or_404(SneakersInstance, pk=pk)
+    logger.debug("Show sneakers instance")
     return render(request, 'Shop/sneaker_page.html', {'current_model': sneaker_model})
 
 
@@ -31,6 +67,7 @@ def edit_page(request, pk):
     sneaker_model = get_object_or_404(SneakersInstance, pk=pk)
     if request.method == 'POST':
         if 'save' in request.POST:
+            logger.debug("Edit current sneakers")
             form = SneakersForm(request.POST, instance=sneaker_model)
             if form.is_valid():
                 sneaker_model = form.save(commit=False)
@@ -38,11 +75,13 @@ def edit_page(request, pk):
                 return redirect('sneaker_page', pk=sneaker_model.pk)
 
         if 'new' in request.POST:
+            logger.debug("Add new sneakers")
             return redirect('new_page')
 
         if 'delete' in request.POST:
             form = SneakersForm(request.POST, instance=sneaker_model)
             if form.is_valid():
+                logger.debug("Delete current sneakers")
                 sneaker_model.delete()
                 return redirect('base_page')
     else:
@@ -64,6 +103,7 @@ def new_page(request):
 
 def send_mail(request):
     current_site = get_current_site(request)
+    logger.debug("Send mail")
     mail_subject = 'Activate your account.'
     user = User.objects.get(username=request.user.username)
     message = render_to_string('Shop/active_email.html', {
@@ -85,8 +125,10 @@ def activate(request, uidb64, token):
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        logger.error("Something goes wrong...")
         user = None
     if user is not None and account_activation_token.check_token(user, token):
+        logger.debug("Verification complete")
         user.shopuser.verified = True
         user.save()
         return redirect('base_page')
